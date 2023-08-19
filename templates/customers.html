@@ -1,0 +1,6 @@
+<h1>Customers</h1>
+<ul>
+{% for customer in customers %}
+    <li>{{ customer.firstname }} {{ customer.lastname }} - {{ customer.email }}</li>
+{% endfor %}
+</ul>
