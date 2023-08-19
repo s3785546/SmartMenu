@@ -54,7 +54,7 @@ def view_users():
 
 @app.route('/')
 def hello():
-    return '<h1>Hello, World!</h1>'
+    return render_template('index.html')
 
 @app.route('/index/')
 def index():
