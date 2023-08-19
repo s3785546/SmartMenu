@@ -13,17 +13,18 @@
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Age</th>
-                <th>Biography</th>
+                <th>Role</th>
             </tr>
         </thead>
         <tbody>
-            {% for customer in customers %}
+            {% for user in users %}
                 <tr>
-                    <td>{{ customer.id }}</td>
-                    <td>{{ customer.firstname }}</td>
-                    <td>{{ customer.lastname }}</td>
-                    <td>{{ customer.email }}</td>
-                    <td>{{ customer.age }}</td>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.lastname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.age }}</td>
+                    <td>{{ user.role}}</td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -22,15 +22,14 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-class Customer(db.Model, UserMixin):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(100), nullable=False)
     lastname = db.Column(db.String(100), nullable=False)
     role = db.Column(db.String(80), default="customer") 
     email = db.Column(db.String(80), unique=True, nullable=False)
     age = db.Column(db.Integer)
-    created_at = db.Column(db.DateTime(timezone=True),
-                           server_default=func.now())
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     is_active = db.Column(db.Boolean, default=True)
     password_hash = db.Column(db.String(128))
     
@@ -49,7 +48,12 @@ class Customer(db.Model, UserMixin):
     def is_admin(self):
         return self.role == "admin"
     
-    def get_id(self):
-        return str(self.id)
+    @property
+    def is_restaurant(self):
+        return self.role == "restaurant"
+    
+    @property
+    def is_customer(self):
+        return self.role == "customer"
 
 from routes import *
