@@ -57,3 +57,6 @@ class User(db.Model, UserMixin):
         return self.role == "customer"
 
 from routes import *
+
+if __name__ == "__main__":
+    app.run(debug=True, use_debugger=False, use_reloader=False)

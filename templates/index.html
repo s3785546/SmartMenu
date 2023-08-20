@@ -15,5 +15,9 @@
     <a href="{{ url_for('create_user') }}">Create User</a>
     <hr / >
     <a href="{{ url_for('view_users') }}">View Users</a>
+    {% if current_user.is_authenticated and current_user.role == 'restaurant' %}
+    <hr / >
+    <a href="{{ url_for('dashboard') }}">Restaurant Dashboard</a>
+    {% endif %}
 </body>
 </html>

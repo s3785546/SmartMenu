@@ -1,5 +1,5 @@
 from flask import render_template, request, url_for, redirect
-from flask_login import login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db, User, login_manager
 from forms import LoginForm
 
@@ -35,6 +35,13 @@ def login():
             login_user(user)
             return redirect(url_for('index'))
     return render_template('login.html', form=form)
+
+@app.route('/dashboard/')
+@login_required
+def dashboard():
+    if current_user.role != "restaurant":
+        return "Access Forbidden", 403
+    return render_template('restaurantDashboard.html')
 
 @app.route('/logout/')
 @login_required
