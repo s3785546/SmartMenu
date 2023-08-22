@@ -20,16 +20,22 @@ function CreateUserPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Here, you'd typically send the formData to your server.
-        // For example:
-        // fetch('/create_user/', {
-        //     method: 'POST',
-        //     body: JSON.stringify(formData),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // });
+    
+        fetch('/api/create_user/', {
+            method: 'POST',
+            body: JSON.stringify(formData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("success")
+            } else {
+                alert("fail")
+            }
+        });
     }
 
     return (
