@@ -5,32 +5,29 @@ function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     
-    const navigate = useNavigate();  // Get the navigate function
+    const navigate = useNavigate(); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        try {
-            const response = await fetch('/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                })
-            });  // <-- Close the fetch here
 
-            if (response.ok) {
-                alert("Login successful");
-                navigate("/");  // Navigate to the dashboard upon successful login
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        };
+
+        fetch('/api/login/', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            if (data.access_token) {
+                localStorage.setItem('access_token', data.access_token);
+                console.log("Stored Token:", data.access_token); 
+                navigate('/');
             } else {
-                alert("Login failed");
+                alert("Login failed. Please check your credentials.");
             }
-        } catch (error) {
-            console.error('There was an error!', error);
-        }
+        });
+        
     };
 
     return (

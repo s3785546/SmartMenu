@@ -7,17 +7,22 @@ from sqlalchemy.sql import func
 from sqlalchemy.exc import IntegrityError
 from flask_login import UserMixin
 from flask_cors import CORS
+from flask import session
+from flask_jwt_extended import JWTManager
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__, static_folder="frontend/build")
-CORS(app)
+CORS(app, supports_credentials=True, resources={r"/api/*": {"origins": "*", "expose_headers": "Authorization"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'bigSteve'
 app.config['WTF_CSRF_SECRET_KEY'] = 'bigOldSteve'
-
-
+app.config["SESSION_COOKIE_SAMESITE"] = "None"
+app.config["SESSION_COOKIE_SECURE"] = True
+app.config['JWT_SECRET_KEY'] = 'hugeSteve'
+app.config['JWT_TOKEN_LOCATION'] = ['headers']
 db = SQLAlchemy(app)
+jwt = JWTManager(app)
 
 
 login_manager = LoginManager()
